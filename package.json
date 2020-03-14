@@ -1,0 +1,24 @@
+{
+  "name": "Blog-Collaboration-team",
+  "version": "1.0.0",
+  "description": "GA team project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Madhavpokhrel05/Blog-Collaboration-team.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Madhavpokhrel05/Blog-Collaboration-team/issues"
+  },
+  "homepage": "https://github.com/Madhavpokhrel05/Blog-Collaboration-team#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
