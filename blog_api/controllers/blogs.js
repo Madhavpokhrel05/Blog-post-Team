@@ -23,8 +23,6 @@ blogs.get('/', (req, res) => {
   })
 })
 
-
-
 //Delete
 blogs.delete('/:id', (req, res) => {
   Blog.findByIdAndRemove(req.params.id, (err, deletedBlog) => {
@@ -44,6 +42,5 @@ blogs.put('/:id', (req, res) => {
     res.status(200).json(updatedBlog)
   })
 })
-
 
 module.exports = blogs
