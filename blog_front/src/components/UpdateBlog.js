@@ -1,6 +1,6 @@
 import React from 'react'
 
-class UpdateForm extends React.Component {
+class UpdateBlog extends React.Component {
   render () {
     return (
       <div className="modal edit">
@@ -25,4 +25,4 @@ class UpdateForm extends React.Component {
   }
 }
 
-export default UpdateForm
+export default UpdateBlog
