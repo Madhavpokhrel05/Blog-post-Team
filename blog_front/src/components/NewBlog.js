@@ -39,7 +39,7 @@ class NewBlog extends React.Component {
   }
   render () {
     // console.log("new blog");
-    
+
     return (
       <form onSubmit={this.handleSubmit}>
         <label htmlFor="title"></label>
