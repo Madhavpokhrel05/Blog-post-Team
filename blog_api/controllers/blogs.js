@@ -3,6 +3,16 @@ const blogs = express.Router()
 const Blog = require('../models/blogs.js')
 
 
+//Create
+blogs.post('/', async (req, res) => {
+  Blog.create(req.body, (error, createdBlog) => {
+    if (error) {
+      res.status(400).json({error: error.message})
+    }
+    res.status(200).send(createdBlog)
+  })
+})
+
 //Index
 blogs.get('/', (req, res) => {
   Blog.find({}, (err, foundBlogs) => {
@@ -13,15 +23,7 @@ blogs.get('/', (req, res) => {
   })
 })
 
-//Create
-blogs.post('/', async (req, res) => {
-  Blog.create(req.body, (error, createdBlog) => {
-    if (error) {
-      res.status(400).json({error: error.message})
-    }
-    res.status(200).send(createdBlog)
-  })
-})
+
 
 //Delete
 blogs.delete('/:id', (req, res) => {
