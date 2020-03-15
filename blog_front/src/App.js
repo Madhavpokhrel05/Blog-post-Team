@@ -18,9 +18,13 @@ class App extends React.Component {
       super(props)
       this.state = {
         blogs: [],
+        blog: null
       }
       this.getBlogs = this.getBlogs.bind(this)
       this.handleAddBlog = this.handleAddBlog.bind(this)
+      this.deleteBlog = this.deleteBlog.bind(this)
+      this.toggleComplete = this.toggleComplete.bind(this)
+      this.getBlog = this.getBlog.bind(this)
     }
     componentDidMount() {
       this.getBlogs()
@@ -42,24 +46,88 @@ class App extends React.Component {
         title: ''
       })
     }
+    handleSubmit (event) {
+      event.preventDefault()
+      fetch(baseURL + '/blogs', {
+        method: 'POST',
+        body: JSON.stringify({title: this.state.title}),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }) .then (res => res.json())
+         .then (resJson => {
+           this.props.handleAddBlog(resJson)
+           this.setState({
+             title: ''
+           })
+         }) .catch (error => console.error({'Error': error}))
+      }
+    async deleteBlog(id) {
+      console.log(`I made a delete request to here: ${baseURL}/blogs/${id}`)
+      try {
+        let response = await fetch(baseURL + '/blogs/' +  id, {
+          method: 'DELETE'
+        })
+        let data = await response.json()
+        const foundBlog = this.state.blogs.findIndex(blog => blog._id === id)
+        const copyBlogs = [...this.state.blogs]
+        copyBlogs.splice(foundBlog, 1)
+        this.setState({blogs: copyBlogs})
+      } catch(e){
+        console.error(e)
+      }
+    }
+    async toggleComplete (blog){
+      console.log(blog)
+      try{
+        let response = await fetch(baseURL + '/blogs/' + blog._id, {
+          method: 'PUT',
+          body: JSON.stringify({complete: !blog.complete}),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        let updatedBlog = await response.json()
+        const foundBlog = this.state.blogs.findIndex(foundItem => foundItem._id === blog._id)
+        const copyBlogs = [...this.state.blogs]
+        copyBlogs[foundBlog].complete = updatedBlog.complete
+        console.log(updatedBlog)
+        this.setState({blogs: copyBlogs})
+      } catch(e) {
+        console.error(e)
+      }
+    }
+    getBlog(blog) {
+      this.setState({blog: blog})
+      console.log(blog)
+    }
 
     render () {
       return (
         <div className='container'>
-          <h1>Blogs Contents</h1>
+          <h1>Blog Contents</h1>
           <NewBlog handleAddBlog={this.handleAddBlog} baseURL={baseURL}/>
           <table>
             <tbody>
               {this.state.blogs.map(blog => {
                 return (
-                  <tr key={blog._id}>
-                    <td> {blog.title}</td>
+                  <tr key={blog._id} onMouseOver={() => this.getBlog(blog)}>
+                    <td onDoubleClick={() => this.toggleComplete(blog)}
+                      className={blog.complete
+                      ? 'complete'
+                      : null}>
+                      {blog.title} and its {blog.complete ? 'complete' : 'not complete'}
+                    </td>
+                   <td onClick={() => {this.deleteBlog(blog._id)}}>Delete</td>
                   </tr>
                 )
               })
              }
         </tbody>
       </table>
+      {this.state.blog
+        ? <ShowBlog blog={this.state.blog}/>
+        : null}
      </div>
    )
  }

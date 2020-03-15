@@ -17,12 +17,12 @@ class NewBlog extends React.Component {
     try{
       let response = await fetch(this.props.baseURL + '/blogs', {
           method: 'POST',
-          body: JSON.stringify({name: this.state.title}),
+          body: JSON.stringify({title: this.state.title}),
           headers: {
               'Content-Type': 'application/json'
             }
           })
-          let data =  await response.json()
+          let data = await response.json()
           this.props.handleAddBlog(data)
           this.setState({
             title: ''
@@ -35,8 +35,8 @@ class NewBlog extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label htmlFor="title"></label>
-        <input type="text" id="title" name="title" onChange={this.handleChange} value={this.state.title} placeholder="add a blog"/>
-        <input type="submit" value="Blog content"/>
+        <input type="text" id="title" name="title" onChange={this.handleChange} value={this.state.title} placeholder="add a blog title"/>
+        <input type="submit" value="Add Blog"/>
       </form>
     )
   }

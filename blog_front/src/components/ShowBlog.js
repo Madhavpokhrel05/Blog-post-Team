@@ -5,11 +5,10 @@ class ShowBlog extends React.Component {
     return (
       <>
         <div className="details">
-         <h3>Blog Details:</h3>
-         <hr/>
-         <h4> { this.props.blog.title } Details </h4>
-         <h6><span>content:</span>   { this.props.blog.content ? 'There is a content' : 'There is not any content'} </h6>
-         <p><span>entry:</span> { this.props.blog.entry } </p>
+         <h3>Blog Title: {this.props.blog.title}</h3>
+
+         <h4></h4>
+         <p><span>Entry:</span> {this.props.blog.entry} </p>
        </div>
       </>
     )
