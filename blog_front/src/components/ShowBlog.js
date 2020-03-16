@@ -7,11 +7,11 @@ class ShowBlog extends React.Component {
         <div className="details">
          <h3>Blog Title: {this.props.blog.title}</h3>
 
-         <h4></h4>
-         <p><span>Entry:</span> {this.props.blog.entry} </p>
+         <h4>Entry: {this.props.blog.entry}</h4>
        </div>
       </>
     )
   }
  }
+ 
 export default ShowBlog

@@ -12,12 +12,13 @@ class UpdateBlog extends React.Component {
               id="title"
             />
             <label htmlFor="entry">Entry</label>
-            <input
-              type="text"
+            <textarea
+              className="u-full-width"
               id="entry"
-            />
+            >
+            </textarea>
             <input type="submit" value="Update Blog" className="button-primary" />
-            <button className="button-red"> Don't Update </button>
+            <button className="button-blue"> Don't Update </button>
           </div>
         </form>
       </div>

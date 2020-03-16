@@ -43,14 +43,15 @@ class App extends React.Component {
       const copyBlogs = [blog, ...this.state.blogs]
       this.setState({
         blogs: copyBlogs,
-        title: ''
+        title: '',
+        entry: ''
       })
     }
     handleSubmit (event) {
       event.preventDefault()
       fetch(baseURL + '/blogs', {
         method: 'POST',
-        body: JSON.stringify({title: this.state.title}),
+        body: JSON.stringify({title: this.state.title}, {entry: this.state.entry}),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -58,7 +59,8 @@ class App extends React.Component {
          .then (resJson => {
            this.props.handleAddBlog(resJson)
            this.setState({
-             title: ''
+             title: '',
+             entry: ''
            })
          }) .catch (error => console.error({'Error': error}))
       }
@@ -116,9 +118,9 @@ class App extends React.Component {
                       className={blog.complete
                       ? 'complete'
                       : null}>
-                      {blog.title} and its {blog.complete ? 'complete' : 'not complete'}
+                      {blog.title}
                     </td>
-                   <td onClick={() => {this.deleteBlog(blog._id)}}>Delete</td>
+                   <td onClick={() => {this.deleteBlog(blog._id)}}>X</td>
                   </tr>
                 )
               })
