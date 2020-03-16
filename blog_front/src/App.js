@@ -1,8 +1,10 @@
 import React from 'react'
 
+import './css/style.css'
 import NewBlog from './components/NewBlog.js'
 import ShowBlog from './components/ShowBlog.js'
 import UpdateBlog from './components/UpdateBlog.js'
+
 let baseURL = process.env.REACT_APP_BASEURL
 
 if (process.env.NODE_ENV === 'development') {
@@ -120,6 +122,7 @@ class App extends React.Component {
                       : null}>
                       {blog.title}
                     </td>
+                    <td>{blog.likes}</td>
                    <td onClick={() => {this.deleteBlog(blog._id)}}>X</td>
                   </tr>
                 )
