@@ -1,11 +1,24 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const session = require('express-session')
+const bcrypt = require ('bcrypt')
+const User = require('../models/users.js')
+const PORT = process.env.PORT
+const mongodbURI = process.env.MONGODBURI
 const app = express()
-const PORT = 3003
-
-
+require('dotenv').config()
 const cors = require('cors')
 const blogsController = require('./controllers/blogs.js')
+const hashedString = bcrypt.hashSync('Teamwork', bcrypt.genSaltSync(10))
+
+const sessionsController = require('./controllers/sessions.js')
+app.use('/sessions', sessionsController)
+
+const usersController = require('./controllers/users.js')
+app.use('/users', usersController)
+
+const projectsController = require('./controllers/projects.js')
+app.use('/projects', projectsController)
 
 app.use(express.json())
 
@@ -21,6 +34,12 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
+
+app.use(session({
+  secret: process.env.secret,
+  resave: false,
+  saveUninitialized: false
+}))
 
 mongoose.connection.on('error', err => console.log(err.message + ' is Mongod not running?'))
 mongoose.connection.on('disconnected', () => console.log('mongo disconnected'))
